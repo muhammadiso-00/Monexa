@@ -23,8 +23,21 @@ export class UserService {
       if (username) user.username = username;
       user.email = `tg_${telegramId}@monexa.local`;
       await this.userRepo.save(user);
+    } else {
+      // Keep username up to date if it changes on Telegram
+      if (username && user.username !== username) {
+        user.username = username;
+        await this.userRepo.save(user);
+      }
     }
     return user;
+  }
+
+  async setPhoneForTelegramUser(telegramId: number, phone: string): Promise<User> {
+    const user = await this.userRepo.findOne({ where: { telegram_id: telegramId } });
+    if (!user) throw new NotFoundException('User not found');
+    user.phone = phone;
+    return this.userRepo.save(user);
   }
 
   async findById(id: string): Promise<User> {

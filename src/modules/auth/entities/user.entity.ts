@@ -12,10 +12,13 @@ export class User {
   name: string;
 
   @Column({ type: 'varchar', length: 100, nullable: true, unique: true })
-  username: string;
+  username: string | null;
 
   @Column({ type: 'bigint', nullable: true, unique: true })
-  telegram_id: number;
+  telegram_id: number | null;
+
+  @Column({ type: 'varchar', length: 32, nullable: true, unique: true })
+  phone: string | null;
 
   @Column({ type: 'boolean', default: false })
   is_frozen: boolean;
