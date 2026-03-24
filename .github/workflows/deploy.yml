@@ -71,7 +71,7 @@ jobs:
                   - "3001:3001"
             COMPOSE
             echo "Logging into GHCR..."
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            docker compose pull
-            docker compose up -d
-            docker image prune -f
+            echo ${{ secrets.GITHUB_TOKEN }} | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            sudo docker compose pull
+            sudo docker compose up -d
+            sudo docker image prune -f
