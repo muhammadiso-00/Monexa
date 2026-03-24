@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  monexa:
+    image: ghcr.io/muhammadiso-00/monexa:latest
+    container_name: monexa
+    restart: always
+    env_file:
+      - .env # Place a production .env next to this compose on the server
+    ports:
+      - "3001:3001"
+    # If Postgres runs separately, ensure POSTGRES_* are in .env
+    # depends_on:
+    #   - postgres
+
+  # Optional local Postgres (commented out for prod; enable if needed)
+  # postgres:
+  #   image: postgres:16-alpine
+  #   restart: always
+  #   environment:
+  #     POSTGRES_DB: ${POSTGRES_DB}
+  #     POSTGRES_USER: ${POSTGRES_USER}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:
