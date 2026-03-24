@@ -223,10 +223,12 @@ export class BotService implements OnModuleInit {
         await this.transfersService.transferMnx(fromUser, toUser, cents);
 
         ctx.reply(`💸 Successfully sent ${formatMnx(cents)} to @${targetUsername}.`);
-        this.bot.telegram.sendMessage(
-          toUser.telegram_id,
-          `📥 You received ${formatMnx(cents)} from @${fromUser.username || fromUser.name}.`,
-        );
+        if (toUser.telegram_id) {
+          this.bot.telegram.sendMessage(
+            toUser.telegram_id as number,
+            `📥 You received ${formatMnx(cents)} from @${fromUser.username || fromUser.name}.`,
+          );
+        }
       } catch (e: any) {
         ctx.reply(`Transfer failed: ${e.message}`);
       }
